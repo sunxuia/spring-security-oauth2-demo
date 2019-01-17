@@ -22,7 +22,6 @@
         <module>cb-jwt-provider</module>
         <module>cb-jwt-client</module>
         <module>cb-jwt-client-jwt-authorize</module>
-        <module>c7-oauth2-client-implicit</module>
         <module>cb-jwt-client-implicit</module>
     </modules>
     <packaging>pom</packaging>
