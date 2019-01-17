@@ -1,0 +1,27 @@
+security:
+  oauth2:
+    # authorization server 的客户端设置
+    client:
+      clientId: ssoclient-1
+      clientSecret: ssosecret
+      # 如果写localhost, 则client 和server 的主机地址就一样了, 会出现一些异常情况, 如果想要解决可以参考下面这个连接, 我没有试过, 直接改成127.0.0.1 也能解决问题
+      # https://stackoverflow.com/questions/34219911/why-is-accesstokenrequests-preservedstate-perpetually-null-with-a-resultant-csr
+      access-token-uri: http://127.0.0.1:8888/oauth/token
+      user-authorization-uri: http://127.0.0.1:8888/oauth/authorize
+    # resource server 客户端的设置
+    resource:
+      user-info-uri: http://127.0.0.1:8888/me
+      prefer-token-info: false
+
+# 重命名session 的键值, 避免 "Possible CSRF detected - state parameter was required but no state could be found" 异常
+server.servlet.session.cookie.name: OAUTH2_CLIENT_SESION
+
+spring:
+  thymeleaf:
+    prefix: classpath:/templates/
+    suffix: .html
+    cache: false
+
+logging:
+  level:
+    root: debug

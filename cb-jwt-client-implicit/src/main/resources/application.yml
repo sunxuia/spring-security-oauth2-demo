@@ -1,0 +1,22 @@
+# 因为不使用spring security oauth2 client, 所以不用配置相关内容了.
+
+# 不使用session 了(客户端)
+server.servlet.session.persistent: false
+
+management.endpoints.web.exposure.include: httptrace
+
+logging:
+  level:
+    root: debug
+
+# 因为要获得key 用来对传入的jwt 进行验证, 所以添加了一些上面oauth2 的配置内容.
+# 不过上面oauth2 的相关配置项不能删除, 否则在启动时会出现错误.
+jwt:
+  token-header-name: Authorization
+  token-prefix: "Bearer "
+  client-id: ssoclient-1
+  client-secret: ssosecret
+  key-uri: http://127.0.0.1:8888/oauth/token_key
+  user-authorization-uri: http://127.0.0.1:8888/oauth/authorize
+  expiration: 604800
+

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <title>登录</title>
+    <style>
+        body {
+            margin: 10px 10px auto 10px;
+            font-family: -apple-system, BlinkMacSystemFont, Helvetica Neue, PingFang SC, Microsoft YaHei, Source Han Sans SC, Noto Sans CJK SC, WenQuanYi Micro Hei, sans-serif;
+            font-size: 15px;
+            color: #1a1a1a;
+        }
+    </style>
+</head>
+
+<body>
+<h3>用户信息</h3>
+<div>
+    <p><b>用户名 : </b><span th:text="${user.name}"></span></p>
+    <p><b>密码 : </b><span th:text="${user.password}"></span></p>
+    <p><b>邮箱 : </b><span th:text="${user.mailAddress}"></span></p>
+    <p><b>状态 : </b><span th:text="${user.state}"></span></p>
+    <p><b>创建时间 : </b><span th:text="${user.createTime}"></span></p>
+    <p><b>权限 : </b></p>
+    <ul th:each="auth: ${authorities}">
+        <li th:text="${auth.getAuthority()}"></li>
+    </ul>
+</div>
+<hr/>
+<div>
+    <div sec:authorize="isAuthenticated()">
+        <p><b>已登录</b></p>
+        <p>登录的用户为: <span sec:authentication="name"></span></p>
+        <p>用户角色为: <span sec:authentication="principal.authorities"></span></p>
+    </div>
+    <div sec:authorize="isAnonymous()">
+        <p><b>未登录</b></p>
+    </div>
+</div>
+</body>
+
+</html>

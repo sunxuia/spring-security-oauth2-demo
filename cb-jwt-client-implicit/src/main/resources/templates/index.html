@@ -1,0 +1,45 @@
+<html>
+<head>
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+</head>
+<body>
+<button id="btnLogin">登录</button>
+<button id="btnPrincipal">显示principal</button>
+<div id="divPrincipal"></div>
+<script>
+    // 获得认证相关的数据
+    $.ajax('/authorization-info', {
+        success: function (authInfo) {
+            // 从url 中获得access token
+            if (location.hash) {
+                var accessToken = location.hash.match(/[#&]access_token=([^&]+)/)[1];
+                var authSetting = {};
+                authSetting[authInfo.tokenHeaderName] = authInfo.tokenPrefix + accessToken;
+                $.ajaxSetup({
+                    headers: authSetting
+                });
+            }
+
+            // 登录按钮(会跳转页面)
+            $('#btnLogin').on('click', function () {
+                location.href = authInfo.authorizationUri + "?response_type=token&client_id=" + authInfo.clientId + "&redirect_uri=" + location.href
+            });
+
+            // 显示principal.
+            $('#btnPrincipal').on('click', function () {
+                // 如果之前一步得到了access token 的话, 就会把jwt 带上.
+                $.ajax('/principal', {
+                    success: function (principal) {
+                        if (principal) {
+                            $('#divPrincipal').text('principal is ' + JSON.stringify(principal));
+                        } else {
+                            $('#divPrincipal').text('principal is null');
+                        }
+                    }
+                })
+            });
+        }
+    });
+</script>
+</body>
+</html>

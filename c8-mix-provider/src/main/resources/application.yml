@@ -1,0 +1,19 @@
+server:
+  port: 8888
+loging:
+  level:
+    root: debug
+github:
+  client:
+    clientId: 4b7c4d8da7668e66b851
+    clientSecret: cff6aeb515ddffdd1ad411a21c2a4a4d7fa2453d
+    access-token-uri: https://github.com/login/oauth/access_token
+    user-authorization-uri: https://github.com/login/oauth/authorize
+  resource:
+    user-info-uri: https://api.github.com/user
+    prefer-token-info: false
+spring:
+  thymeleaf:
+    prefix: classpath:/templates/
+    suffix: .html
+    cache: false

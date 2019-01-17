@@ -1,0 +1,32 @@
+security:
+  oauth2:
+    client:
+      clientId: ssoclient-1
+      clientSecret: ssosecret
+      # 如果写localhost, 则client 和server 的主机地址就一样了, 会出现一些异常情况, 如果想要解决可以参考下面这个连接, 我没有试过, 直接改成127.0.0.1 也能解决问题
+      # https://stackoverflow.com/questions/34219911/why-is-accesstokenrequests-preservedstate-perpetually-null-with-a-resultant-csr
+      access-token-uri: http://127.0.0.1:8888/oauth/token
+      user-authorization-uri: http://127.0.0.1:8888/oauth/authorize
+    resource:
+      jwt:
+        key-uri: http://127.0.0.1:8888/oauth/token_key
+
+#server.servlet.session.persistent: false
+server.servlet.session.cookie.name: OAUTH2_CLIENT_SESION
+
+management.endpoints.web.exposure.include: httptrace
+
+logging:
+  level:
+    root: debug
+
+# 因为要获得key 用来对传入的jwt 进行验证, 所以添加了一些上面oauth2 的配置内容.
+# 不过上面oauth2 的相关配置项不能删除, 否则在启动时会出现错误.
+jwt:
+  token-header-name: Authorization
+  token-prefix: "Bearer "
+  client-id: ssoclient-1
+  client-secret: ssosecret
+  key-uri: http://127.0.0.1:8888/oauth/token_key
+  expiration: 604800
+

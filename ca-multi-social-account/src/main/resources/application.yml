@@ -1,0 +1,29 @@
+github:
+  client:
+    clientId: 4b7c4d8da7668e66b851
+    clientSecret: cff6aeb515ddffdd1ad411a21c2a4a4d7fa2453d
+    access-token-uri: https://github.com/login/oauth/access_token
+    user-authorization-uri: https://github.com/login/oauth/authorize
+  resource:
+    user-info-uri: https://api.github.com/user
+    prefer-token-info: false
+
+weibo:
+  client:
+    clientId: 644336069
+    clientSecret: be57719150f4085a92120bd2f012861a
+    access-token-uri: https://api.weibo.com/oauth2/access_token
+    user-authorization-uri: https://api.weibo.com/oauth2/authorize
+  resource:
+    user-info-uri: https://api.weibo.com/2/users/show.json
+    prefer-token-info: false
+
+spring:
+  thymeleaf:
+    prefix: classpath:/templates/
+    suffix: .html
+    cache: false
+
+logging:
+  level:
+    root: debug

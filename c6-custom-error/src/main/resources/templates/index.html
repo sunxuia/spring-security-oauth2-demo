@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8"/>
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+</head>
+<body>
+<h1>Login</h1>
+<div>
+    With Github: <a href="/login">click here</a>
+    <br/>
+    <button onclick="logout()">logout</button>
+</div>
+<h3 th:text="${param.error}"></h3>
+<h3>principal : </h3>
+<p id="principal"></p>
+
+<input id="csrf" type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+
+<script>
+    //避免spring security 的 csrf 检测
+    $.ajaxSetup({
+        beforeSend: function (xhr, settings) {
+            if (settings.type == 'POST' || settings.type == 'PUT'
+                || settings.type == 'DELETE') {
+                if (!(/^http:.*/.test(settings.url) || /^https:.*/
+                    .test(settings.url))) {
+                    // Only send the token to relative URLs i.e. locally.
+                    xhr.setRequestHeader("X-XSRF-TOKEN", $("#csrf").val());
+                }
+            }
+        }
+    });
+
+    function logout() {
+        $.post("/logout", function () {
+            setPrincipal();
+        });
+    }
+
+    function setPrincipal() {
+        $.ajax({
+            url: "/user",
+            beforeSend: function (req) {
+
+            },
+            success: function (data) {
+                $("#principal").text(JSON.stringify(data));
+            },
+            error: function (err) {
+                $("#principal").text("error : \n" + JSON.stringify(err));
+            }
+        });
+    }
+
+    $(document).ready(function () {
+        setPrincipal();
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,23 @@
+security:
+  oauth2:
+    # authorization server 的客户端设置
+    client:
+      clientId: ssoclient-1
+      clientSecret: ssosecret
+      # 如果写localhost, 则client 和server 的主机地址就一样了, 会出现一些异常情况, 如果想要解决可以参考下面这个连接, 我没有试过, 直接改成127.0.0.1 也能解决问题
+      # https://stackoverflow.com/questions/34219911/why-is-accesstokenrequests-preservedstate-perpetually-null-with-a-resultant-csr
+      access-token-uri: http://127.0.0.1:8888/oauth/token
+      user-authorization-uri: http://127.0.0.1:8888/oauth/authorize
+    # 不是向资源服务器请求用户信息, 而是向认证服务器请求access token 的签名密钥.
+    resource:
+      jwt:
+        key-uri: http://127.0.0.1:8888/oauth/token_key
+
+#server.servlet.session.persistent: false
+server.servlet.session.cookie.name: OAUTH2_CLIENT_SESION
+
+management.endpoints.web.exposure.include: httptrace
+
+logging:
+  level:
+    root: debug
