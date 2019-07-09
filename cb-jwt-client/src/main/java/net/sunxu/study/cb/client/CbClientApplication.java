@@ -10,5 +10,4 @@ public class CbClientApplication {
     public static void main(String[] args) {
         SpringApplication.run(CbClientApplication.class, args);
     }
-
 }

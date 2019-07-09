@@ -1,12 +1,9 @@
 package net.sunxu.study.cb.client3;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.ModelAndView;
 
 import java.security.Principal;
 import java.util.HashMap;
@@ -23,6 +20,11 @@ public class IndexController {
         return "index";
     }
 
+    /**
+     * 获得客户端认证的相关信息. 浏览器根据这些信息拼接出访问认证服务器的url.
+     *
+     * @return
+     */
     @RequestMapping("/authorization-info")
     @ResponseBody
     public Object view() {
@@ -39,4 +41,5 @@ public class IndexController {
     public Object principal(Principal principal) {
         return principal;
     }
+
 }
