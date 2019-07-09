@@ -130,6 +130,8 @@
     Host: 127.0.0.1:8888
     Connection: keep-alive
     Content-Length: 92
+
+    code=MG965u
     ```
         
     Authorization 中的base64 内容是 ```ssoclient-1:ssosecret```, 用于client server 的认证. 如果密码不正确就会得到302 的结果.

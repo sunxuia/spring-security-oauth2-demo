@@ -15,7 +15,7 @@
 
 ## client_credentials
 
-客户端模式. 和用户没关系, client 根据自己注册的 id 和密码向provider 请求access token.
+客户端模式. 和用户认证没关系, client 根据自己注册的 id 和密码向provider 请求access token.
 
 (直接把client 认证信息 post 到 http://127.0.0.1:8888/oauth/token?grant_type=client_credentials&client_id=ssoclient-1&client_secret=ssosecret)
 
@@ -151,7 +151,7 @@ Location : http://127.0.0.1:8080/login#access_token=eyJhbGciOiJSUzI1NiIsInR5cCI6
 
 得到的access token 的内容是```{"alg":"RS256","typ":"JWT"}.{"user_name":"admin","scope":["openid"],"exp":1547659747,"authorities":["admin","user"],"jti":"88597a7a-9770-42da-a88a-71c7e6ce2050","client_id":"ssoclient-1","local-user-name":"admin"}```
 
-注意到返回的login 后面是#, 这个是让跳转到对应页面上才能通过js 获得# 后面的内容(这个在AuthorizationEndpoint 中写死了不能改). 在spring mvc 中接收不到# 后面的内容.
+注意到返回的login 后面是#, 这个是让跳转到对应页面上才能通过js 获得# 后面的内容(这个URL 在AuthorizationEndpoint 中是一个层次很深的private 方法创建的不能改). 在spring mvc 中接收不到# 后面的内容.
 
 这种模式的client 无法使用spring client oauth2 来处理, 因为EnableOAuth2Sso 默认使用 AuthorizationCodeResourceDetails (一个被@Primary 标注的bean), 无法注入ImplicitResourceDetails.
 

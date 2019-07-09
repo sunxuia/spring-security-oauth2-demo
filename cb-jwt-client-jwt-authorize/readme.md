@@ -26,6 +26,8 @@
     
     jsessionid 的cookie 是http://127.0.0.1:8888 中的session id.
     
+    请求的URL 需要认证, 所以返回302 要求跳转到登录页面.
+    
     ```http response
     302
     Set-Cookie : OAUTH2_CLIENT_SESION=3B9CC8AC317BAB4BE1B2ED57A5E9BEF2; Path=/; HttpOnly
@@ -39,7 +41,7 @@
 
     ```
 
-0. 根据返回指示执行跳转(http://127.0.0.1:8080/login)
+0. 根据返回指示执行跳转登录URL (http://127.0.0.1:8080/login)
 
     ```http request
     GET /login HTTP/1.1
@@ -53,6 +55,8 @@
 
     ```
     
+    这里登录的URL 返回302, 要求跳转到认证网站.
+    
     ```http response
     302
     X-Content-Type-Options : nosniff
@@ -65,7 +69,7 @@
 
     ```
 
-0. 根据返回指示执行跳转(http://127.0.0.1:8888/oauth/authorize)
+0. 根据返回指示跳转认证网页 (http://127.0.0.1:8888/oauth/authorize)
 
     ```http request
     GET /oauth/authorize?client_id=ssoclient-1&redirect_uri=http%3A%2F%2F127.0.0.1%3A8080%2Flogin&response_type=code&state=fcYJFP HTTP/1.1
@@ -79,7 +83,7 @@
 
     ```
     
-    这里因为已经认证过了, 所以直接返回跳转到8080
+    这里因为已经认证过了, 所以跳过认证网站的登录步骤, 直接返回跳转到8080
     
     ```http response
     302
@@ -105,7 +109,7 @@
 
     ```
     
-    之后8080 从8888 获得access token, 并将access token 添加到返回的头部中.
+    之后8080 根据url 中传来的code, 从8888 获得access token, 并将access token 添加到返回的头部中.
     
     ```http response
     302
