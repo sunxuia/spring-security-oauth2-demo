@@ -35,6 +35,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 // 不要创建session, 使用STATELESS 策略之后就会忽略jsessionid, 也不会创建jesssionid 了
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and().csrf().disable()
+                // 允许在iframe 中加载网页(加载/no-jump-iframe), 这种设置是危险的.
+                .headers().frameOptions().disable()
         ;
     }
 

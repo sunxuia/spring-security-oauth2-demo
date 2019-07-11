@@ -42,4 +42,23 @@ public class IndexController {
         return principal;
     }
 
+    /**
+     * 不用跳转, 允许访问认证服务器获取认证信息, 然后后台自动登录
+     *
+     * @return
+     */
+    @RequestMapping("/no-jump")
+    public String noJump() {
+        return "no-jump";
+    }
+
+    /**
+     * 访问noJump 之后会访问认证服务器, 向认证服务器传递的跳转地址就是这里.
+     *
+     * @return
+     */
+    @RequestMapping("/no-jump-iframe")
+    public String noJumpIframe() {
+        return "no-jump-iframe";
+    }
 }

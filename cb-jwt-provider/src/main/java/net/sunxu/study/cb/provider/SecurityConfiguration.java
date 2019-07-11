@@ -44,6 +44,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and().exceptionHandling().accessDeniedPage("/deny")
                 .and().rememberMe().tokenValiditySeconds(86400).tokenRepository(tokenRepository())
                 .and().csrf().disable()
+                // 允许通过iframe 访问, 这个是危险的.
+                .headers().frameOptions().disable()
         ;
     }
 
